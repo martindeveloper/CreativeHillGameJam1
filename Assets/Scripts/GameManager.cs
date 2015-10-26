@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
     public UnityEngine.UI.Text GameStateText;
     public Sprite HeartSprite;
     public GameObject HeartsContainer;
+    public GameObject RestartButton;
 
     public GameSettings Settings = new GameSettings();
 
@@ -94,9 +95,20 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void OnGameRestart()
+    {
+        Application.LoadLevel(Application.loadedLevelName);
+    }
+
     public void OnGameOver()
     {
         GameStateText.text = "Damn, try it again.";
+
+        if(RestartButton != null)
+        {
+            RestartButton.SetActive(true);
+        }
+
         State = GameState.GameOver;
     }
 
