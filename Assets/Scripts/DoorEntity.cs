@@ -7,6 +7,9 @@ public class DoorEntity : MonoBehaviour {
     public GameObject ClosedPrefab;
     public GameObject OpenedPrefab;
 
+    public int NumberOfKeysToUnlock = 1;
+    private int ActiveNumberOfKeys = 0;
+
     private GameObject CurrentPrefab;
 
     public void Start()
@@ -20,6 +23,16 @@ public class DoorEntity : MonoBehaviour {
         }
     }
 
+    public void Unlock()
+    {
+        ActiveNumberOfKeys++;
+
+        if(NumberOfKeysToUnlock == ActiveNumberOfKeys)
+        {
+            SwitchToOpened();
+        }
+    }
+
     public void SwitchToOpened()
     {
         Transform transform = GetComponent<Transform>();
@@ -28,6 +41,8 @@ public class DoorEntity : MonoBehaviour {
 
         CurrentPrefab = (GameObject)Instantiate(OpenedPrefab, transform.position, Quaternion.identity);
         CurrentPrefab.GetComponent<Transform>().parent = transform;
+
+        IsOpened = true;
     }
 
     public void SwitchToClosed()
@@ -38,5 +53,7 @@ public class DoorEntity : MonoBehaviour {
 
         CurrentPrefab = (GameObject)Instantiate(ClosedPrefab, transform.position, Quaternion.identity);
         CurrentPrefab.GetComponent<Transform>().parent = transform;
+
+        IsOpened = false;
     }
 }

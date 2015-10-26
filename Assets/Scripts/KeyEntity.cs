@@ -26,7 +26,7 @@ public class KeyEntity : MonoBehaviour {
     public void Pickup()
     {
         // Open door
-        AssociatedDoor.SwitchToOpened();
+        AssociatedDoor.Unlock();
 
         // Destroy self
         Destroy(gameObject);

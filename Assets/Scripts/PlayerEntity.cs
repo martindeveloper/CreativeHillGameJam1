@@ -5,23 +5,27 @@ public class PlayerEntity : MonoBehaviour {
 
     public float Speed = 10.0f;
     public float JumpPower = 300.0f;
+    public GameObject ChildSprite;
+    public GameObject RespawnPlace;
 
     private Transform PlayerTransform;
     private Rigidbody2D PlayerRigidBody;
+    private Animator PlayerAnimator;
 
     private bool IsFacingRight = true;
     private bool IsJumping = false;
-
-    private bool HaveKey = false;
+    private bool IsMoving = false;
 
     public void Start()
     {
         PlayerTransform = GetComponent<Transform>();
         PlayerRigidBody = GetComponent<Rigidbody2D>();
+        PlayerAnimator = ChildSprite.GetComponent<Animator>();
     }
 
 	public void Update()
     {
+        PlayerAnimator.enabled = IsMoving;
     }
 
     public void FixedUpdate()
@@ -34,8 +38,12 @@ public class PlayerEntity : MonoBehaviour {
     {
         switch (collision.gameObject.tag)
         {
-            case "Ground":
+            case TagsStructure.Ground:
                 IsJumping = false;
+                break;
+
+            case TagsStructure.Enemy:
+                OnDeath();
                 break;
         }
     }
@@ -44,20 +52,29 @@ public class PlayerEntity : MonoBehaviour {
     {
         switch(collider.gameObject.tag)
         {
-            case "Key":
+            case TagsStructure.Key:
                 KeyEntity key = collider.gameObject.GetComponent<KeyEntity>();
                 key.Pickup();
-
-                HaveKey = true;
                 break;
 
-            case "Door":
-                if (HaveKey)
+            case TagsStructure.Door:
+                DoorEntity door = collider.gameObject.GetComponent<DoorEntity>();
+
+                if (door.IsOpened)
                 {
                     GameManager.Instance.OnWin();
                 }
                 break;
+
+            case TagsStructure.KillingVolume:
+                OnDeath();
+                break;
         }
+    }
+
+    public void OnDeath()
+    {
+        PlayerTransform.position = RespawnPlace.GetComponent<Transform>().position;
     }
 
     private void HandleJumpMovement()
@@ -74,6 +91,8 @@ public class PlayerEntity : MonoBehaviour {
     private void HandleHorizontalMovement()
     {
         float horizontalMovement = Input.GetAxis("Horizontal");
+
+        IsMoving = false;
 
         if (horizontalMovement != 0.0f)
         {
@@ -95,6 +114,8 @@ public class PlayerEntity : MonoBehaviour {
 
             //PlayerRigidBody.MovePosition(targetPosition);
             PlayerRigidBody.velocity = new Vector2(translation, PlayerRigidBody.velocity.y);
+
+            IsMoving = true;
         }
     }
 

@@ -18,7 +18,7 @@ public class CameraFollow : MonoBehaviour {
         CameraComponent = GetComponent<Camera>();
     }
 
-    public void Update()
+    public void FixedUpdate()
     {
         Vector3 targetPosition = TargetTransform.position;
 
