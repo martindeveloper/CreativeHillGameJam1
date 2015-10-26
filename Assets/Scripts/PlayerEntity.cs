@@ -128,9 +128,9 @@ public class PlayerEntity : MonoBehaviour {
 
     private void HandleJumpMovement()
     {
-        float jump = Input.GetAxis("Jump");
+        bool jumpButtonState = Input.GetButtonDown("Jump");
 
-        if(jump > 0 && !IsJumping)
+        if(jumpButtonState && !IsJumping)
         {
             PlayerRigidBody.AddForce(Vector2.up * JumpPower, ForceMode2D.Force);
             IsJumping = true;
