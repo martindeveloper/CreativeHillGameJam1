@@ -19,11 +19,14 @@ public class PlayerEntity : MonoBehaviour {
     private bool IsMoving = false;
     private Coroutine FireCoroutine;
 
+    private GameManager Game;
+
     public void Start()
     {
         PlayerTransform = GetComponent<Transform>();
         PlayerRigidBody = GetComponent<Rigidbody2D>();
         PlayerAnimator = ChildSprite.GetComponent<Animator>();
+        Game = GameManager.Instance;
     }
 
 	public void Update()
@@ -66,7 +69,7 @@ public class PlayerEntity : MonoBehaviour {
 
                 if (door.IsOpened)
                 {
-                    GameManager.Instance.OnWin();
+                    Game.OnWin();
                 }
                 break;
 
@@ -87,6 +90,8 @@ public class PlayerEntity : MonoBehaviour {
     public void OnDeath()
     {
         PlayerTransform.position = RespawnPlace.GetComponent<Transform>().position;
+
+        Game.OnPlayerDeath();
     }
 
     private void HandleFire()
