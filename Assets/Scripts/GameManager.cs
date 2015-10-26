@@ -4,10 +4,20 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
+    [System.Serializable]
+    public class GameSettings
+    {
+        public int PlayerHealth = 3;
+        public PhysicsMaterial2D DeadEntityPhysicsMaterial;
+        public GameObject PlayerBulletEntity;
+        public GameObject EnemyBulletEntity;
+    }
+
     public UnityEngine.UI.Text GameStateText;
     public Sprite HeartSprite;
     public GameObject HeartsContainer;
-    public int PlayerHealth = 3;
+
+    public GameSettings Settings = new GameSettings();
 
     public static GameManager Instance;
 
@@ -34,7 +44,7 @@ public class GameManager : MonoBehaviour {
     {
         State = GameState.Playing;
 
-        CurrentPlayerHealth = PlayerHealth;
+        CurrentPlayerHealth = Settings.PlayerHealth;
 
         GenerateHearts();
      }
@@ -42,12 +52,13 @@ public class GameManager : MonoBehaviour {
     private void GenerateHearts()
     {
         GameObject heartPrototype = new GameObject();
+        heartPrototype.isStatic = true;
         UnityEngine.UI.Image image = heartPrototype.AddComponent<UnityEngine.UI.Image>();
         image.sprite = HeartSprite;
 
         Transform heartsTransform = HeartsContainer.GetComponent<Transform>();
 
-        for (int i = 0; i < PlayerHealth; i++)
+        for (int i = 0; i < Settings.PlayerHealth; i++)
         {
             GameObject heart = Instantiate(heartPrototype, heartsTransform.position, Quaternion.identity) as GameObject;
 
@@ -66,6 +77,8 @@ public class GameManager : MonoBehaviour {
 
             HeartsBuffer.Push(heart);
         }
+
+        Destroy(heartPrototype);
     }
 
     public void OnPlayerDeath()

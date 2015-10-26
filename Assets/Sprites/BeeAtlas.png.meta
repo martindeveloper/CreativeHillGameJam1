@@ -1,12 +1,13 @@
 fileFormatVersion: 2
 guid: c7cbdc1abada61b4bb8ecdcc52782b39
-timeCreated: 1445853101
+timeCreated: 1445874958
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
     21300000: BeeAtlas_0
     21300002: BeeAtlas_1
     21300004: BeeAtlas_2
+    21300006: BeeAtlas_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -57,7 +58,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 322
+        y: 834
         width: 333
         height: 188
       alignment: 0
@@ -67,9 +68,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 170
+        y: 644
         width: 333
-        height: 150
+        height: 188
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -77,7 +78,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 42
+        y: 492
+        width: 333
+        height: 150
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: BeeAtlas_3
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 364
         width: 333
         height: 126
       alignment: 0

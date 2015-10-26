@@ -8,7 +8,6 @@ public class PlayerEntity : MonoBehaviour {
     public float FireDelay = 1.0f;
     public GameObject ChildSprite;
     public GameObject RespawnPlace;
-    public GameObject BulletEntity;
 
     private Transform PlayerTransform;
     private Rigidbody2D PlayerRigidBody;
@@ -112,7 +111,7 @@ public class PlayerEntity : MonoBehaviour {
         Vector3 bulletPosition = PlayerTransform.position;
         bulletPosition.y += 0.5f;
 
-        GameObject bullet = Instantiate(BulletEntity, bulletPosition, Quaternion.identity) as GameObject;
+        GameObject bullet = Instantiate(Game.Settings.PlayerBulletEntity, bulletPosition, Quaternion.identity) as GameObject;
 
         if (bullet != null)
         {
