@@ -5,8 +5,10 @@ public class PlayerEntity : MonoBehaviour {
 
     public float Speed = 10.0f;
     public float JumpPower = 300.0f;
+    public float FireDelay = 1.0f;
     public GameObject ChildSprite;
     public GameObject RespawnPlace;
+    public GameObject BulletEntity;
 
     private Transform PlayerTransform;
     private Rigidbody2D PlayerRigidBody;
@@ -15,6 +17,7 @@ public class PlayerEntity : MonoBehaviour {
     private bool IsFacingRight = true;
     private bool IsJumping = false;
     private bool IsMoving = false;
+    private Coroutine FireCoroutine;
 
     public void Start()
     {
@@ -32,6 +35,7 @@ public class PlayerEntity : MonoBehaviour {
     {
         HandleHorizontalMovement();
         HandleJumpMovement();
+        HandleFire();
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -83,6 +87,39 @@ public class PlayerEntity : MonoBehaviour {
     public void OnDeath()
     {
         PlayerTransform.position = RespawnPlace.GetComponent<Transform>().position;
+    }
+
+    private void HandleFire()
+    {
+        if(Input.GetButton("Fire1"))
+        {
+            if (FireCoroutine == null)
+            {
+                Debug.Log("Player is shooting");
+
+                FireCoroutine = StartCoroutine(Shoot());
+            }
+        }
+    }
+
+    private IEnumerator Shoot()
+    {
+        Vector3 bulletPosition = PlayerTransform.position;
+        bulletPosition.y += 0.5f;
+
+        GameObject bullet = Instantiate(BulletEntity, bulletPosition, Quaternion.identity) as GameObject;
+
+        if (bullet != null)
+        {
+            BulletEntity bulletObject = bullet.GetComponent<BulletEntity>();
+            bulletObject.Direction = (IsFacingRight) ? Vector3.right : Vector3.left;
+            bulletObject.Speed *= 2;
+            bulletObject.OnShoot();
+        }
+
+        yield return new WaitForSeconds(FireDelay);
+
+        FireCoroutine = null;
     }
 
     private void HandleJumpMovement()

@@ -52,6 +52,20 @@ public class EnemyEntity : MonoBehaviour {
         }
     }
 
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        switch (collider.gameObject.tag)
+        {
+            case TagsStructure.PlayerBullet:
+                BulletEntity bullet = collider.gameObject.GetComponent<BulletEntity>();
+
+                bullet.OnHit();
+
+                Destroy(this.gameObject);
+                break;
+        }
+    }
+
     private IEnumerator DelayedShoot()
     {
         IsShootInQueue = true;
