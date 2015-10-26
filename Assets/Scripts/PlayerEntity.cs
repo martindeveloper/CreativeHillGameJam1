@@ -69,6 +69,14 @@ public class PlayerEntity : MonoBehaviour {
             case TagsStructure.KillingVolume:
                 OnDeath();
                 break;
+
+            case TagsStructure.Bullet:
+                BulletEntity bullet = collider.gameObject.GetComponent<BulletEntity>();
+
+                bullet.OnHit();
+
+                OnDeath();
+                break;
         }
     }
 

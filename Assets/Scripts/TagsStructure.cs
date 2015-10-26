@@ -7,4 +7,5 @@ public static class TagsStructure {
     public const string Door = "Door";
     public const string KillingVolume = "KillingVolume";
     public const string Enemy = "Enemy";
+    public const string Bullet = "Bullet";
 }
