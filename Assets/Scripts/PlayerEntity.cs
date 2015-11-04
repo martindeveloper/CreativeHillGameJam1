@@ -61,6 +61,7 @@ public class PlayerEntity : MonoBehaviour {
             case TagsStructure.Key:
                 KeyEntity key = collider.gameObject.GetComponent<KeyEntity>();
                 key.Pickup();
+                Game.OnKeyPickup();
                 break;
 
             case TagsStructure.Door:

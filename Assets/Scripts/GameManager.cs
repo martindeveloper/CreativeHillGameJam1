@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
         public GameObject EnemyBulletEntity;
     }
 
+    public UnityEngine.UI.Text KeysCounterText;
     public UnityEngine.UI.Text GameStateText;
     public Sprite HeartSprite;
     public GameObject HeartsContainer;
@@ -24,6 +25,8 @@ public class GameManager : MonoBehaviour {
 
     private Stack<GameObject> HeartsBuffer = new Stack<GameObject>();
     private int CurrentPlayerHealth;
+    private int CurrentPlayerKeys = 0;
+    private int MaximumKeys = 3;
 
     [System.Serializable]
     public enum GameState
@@ -48,6 +51,11 @@ public class GameManager : MonoBehaviour {
         CurrentPlayerHealth = Settings.PlayerHealth;
 
         GenerateHearts();
+        
+        // Count keys on scene
+        GameObject[] keyObjects = GameObject.FindGameObjectsWithTag("Key") as GameObject[];
+        MaximumKeys = keyObjects.Length;
+        RedrawKeysCounter();
      }
 
     private void GenerateHearts()
@@ -93,6 +101,18 @@ public class GameManager : MonoBehaviour {
         {
             OnGameOver();
         }
+    }
+    
+    private void RedrawKeysCounter()
+    {
+        KeysCounterText.text = string.Format("Keys {0}/{1}", CurrentPlayerKeys, MaximumKeys);
+    }
+    
+    public void OnKeyPickup()
+    {
+        CurrentPlayerKeys++;
+        
+        RedrawKeysCounter();
     }
 
     public void OnGameRestart()
