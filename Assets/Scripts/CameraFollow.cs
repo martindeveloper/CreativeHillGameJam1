@@ -13,13 +13,22 @@ public class CameraFollow : MonoBehaviour {
 
     public void Start()
     {
-        TargetTransform = TargetToFollow.GetComponent<Transform>();
+        if(TargetToFollow != null)
+        {
+            TargetTransform = TargetToFollow.GetComponent<Transform>();
+        }
+        
         CameraTransform = GetComponent<Transform>();
         CameraComponent = GetComponent<Camera>();
     }
 
     public void FixedUpdate()
     {
+        if(TargetToFollow == null)
+        {
+            return;
+        }
+        
         Vector3 targetPosition = TargetTransform.position;
 
         Vector3 point = CameraComponent.WorldToViewportPoint(targetPosition);

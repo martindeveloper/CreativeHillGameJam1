@@ -13,11 +13,20 @@ public class DoorEntity : MonoBehaviour {
     public SpriteRenderer TopRenderer;
     public SpriteRenderer BottomRenderer;
 
-    public int NumberOfKeysToUnlock = 1;
+    private int NumberOfKeysToUnlock = 0;
     private int ActiveNumberOfKeys = 0;
+    
+    private GameManager Game;
+
+    public void Awake()
+    {
+        Game = GameManager.Instance;
+    }
 
     public void Start()
     {
+        NumberOfKeysToUnlock = Game.KeysCount;
+        
         if (IsOpened)
         {
             SwitchToOpened();

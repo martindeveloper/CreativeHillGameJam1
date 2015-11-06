@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour {
     private int CurrentPlayerHealth;
     private int CurrentPlayerKeys = 0;
     private int MaximumKeys = 3;
+    
+    public int KeysCount { get { return MaximumKeys;} set {} }
 
     [System.Serializable]
     public enum GameState
@@ -42,6 +44,10 @@ public class GameManager : MonoBehaviour {
     public void Awake()
     {
         Instance = this;
+        
+        // Count keys on scene
+        GameObject[] keyObjects = GameObject.FindGameObjectsWithTag("Key") as GameObject[];
+        MaximumKeys = keyObjects.Length;
     }
 
     public void Start()
@@ -51,10 +57,6 @@ public class GameManager : MonoBehaviour {
         CurrentPlayerHealth = Settings.PlayerHealth;
 
         GenerateHearts();
-        
-        // Count keys on scene
-        GameObject[] keyObjects = GameObject.FindGameObjectsWithTag("Key") as GameObject[];
-        MaximumKeys = keyObjects.Length;
         RedrawKeysCounter();
      }
 

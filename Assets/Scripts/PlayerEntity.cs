@@ -6,6 +6,7 @@ public class PlayerEntity : MonoBehaviour {
     public float Speed = 10.0f;
     public float JumpPower = 300.0f;
     public float FireDelay = 1.0f;
+    public bool IsShooting = false;
     public GameObject ChildSprite;
     public GameObject RespawnPlace;
 
@@ -96,7 +97,7 @@ public class PlayerEntity : MonoBehaviour {
 
     private void HandleFire()
     {
-        if(Input.GetButton("Fire1"))
+        if(Input.GetButton("Fire1") && IsShooting)
         {
             if (FireCoroutine == null)
             {
@@ -129,7 +130,7 @@ public class PlayerEntity : MonoBehaviour {
 
     private void HandleJumpMovement()
     {
-        bool jumpButtonState = Input.GetButtonDown("Jump");
+        bool jumpButtonState = Input.GetButton("Jump");
 
         if(jumpButtonState && !IsJumping)
         {
